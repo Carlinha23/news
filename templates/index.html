@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Aggregator</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> -->
+</head>
+<body class="bg-light">
+
+    <!-- Include Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="container mt-5">
+        <!-- Header -->
+        <h1 class="text-center mb-4">News Aggregator</h1>
+
+        <!-- Search Form -->
+        <form action="/search" method="get" class="form-inline justify-content-center mb-4">
+            <div class="form-group">
+                <input type="text" name="q" class="form-control mr-2" placeholder="Search by title or date">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- News List -->
+        <ul class="list-group">
+            {% for news in news_items %}
+            <li class="list-group-item mb-3">
+                <h3>{{ news[0] }}</h3>
+                <p><a href="{{ news[1] }}" target="_blank" class="text-primary">Read more</a></p>
+                <p><small class="text-muted">{{ news[2] }}</small></p>
+                <p><small class="text-muted">{{ news[3] }}</small></p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

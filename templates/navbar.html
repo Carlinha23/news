@@ -1,0 +1,35 @@
+<!-- navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <span>Software News</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        {% if not g.user %}
+          <!-- If user is not logged in, show Sign up and Login -->
+          <li class="nav-item">
+            <a class="nav-link" href="/signup">Sign up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Log in</a>
+          </li>
+        {% else %}
+          <!-- If user is logged in, show name and Logout -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">Hi, {{ g.user.username }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
