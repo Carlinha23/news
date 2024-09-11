@@ -6,6 +6,7 @@ from forms import SignupForm
 from forms import LoginForm
 from models import  User
 from flask import g
+from models import Favorite
 
 
 app = Flask(__name__)
@@ -170,6 +171,17 @@ def search():
     conn.close()
 
     return render_template('index.html', news_items=search_results)
+
+@app.route('/saved_news')
+def view_saved_news():
+    if not g.user:
+        flash("You need to log in to view your saved news.", "warning")
+        return redirect("/login")
+
+    saved_news = Favorite.query.filter_by(user_id=g.user.id).all()
+
+    return render_template('saved_news.html', saved_news=saved_news)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

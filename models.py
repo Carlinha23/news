@@ -37,6 +37,18 @@ class User(db.Model):
             return user
         return False
 
+class Favorite(db.Model):
+    __tablename__ = 'favorites'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    news_title = db.Column(db.String(255), nullable=False)
+    news_link = db.Column(db.String(500), nullable=False)
+    publish_date = db.Column(db.DateTime, nullable=False)
+    description = db.Column(db.String, nullable=True)
+
+    user = db.relationship('User', backref=db.backref('favorites', lazy=True))
+
 def connect_db(app):
     """Connect this database to provided Flask app."""
     db.app = app

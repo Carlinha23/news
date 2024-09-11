@@ -33,9 +33,18 @@
                 <p><a href="{{ news[1] }}" target="_blank" class="text-primary">Read more</a></p>
                 <p><small class="text-muted">{{ news[2] }}</small></p>
                 <p><small class="text-muted">{{ news[3] }}</small></p>
-            </li>
-            {% endfor %}
-        </ul>
+            
+                <!-- Save Button Form -->
+        <form action="/save_favorite" method="post" class="d-inline">
+            <input type="hidden" name="news_title" value="{{ news[0] }}">
+            <input type="hidden" name="news_link" value="{{ news[1] }}">
+            <input type="hidden" name="publish_date" value="{{ news[2] }}">
+            <input type="hidden" name="description" value="{{ news[3] }}">
+            <button type="submit" class="btn btn-outline-success btn-sm">Save</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
     </div>
 
     <!-- Bootstrap JS and dependencies -->

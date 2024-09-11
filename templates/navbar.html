@@ -20,10 +20,13 @@
             <a class="nav-link" href="/login">Log in</a>
           </li>
         {% else %}
-          <!-- If user is logged in, show name and Logout -->
+          <!-- If user is logged in, show name, Saved News, and Logout -->
           <li class="nav-item">
             <a class="nav-link" href="#">Hi, {{ g.user.username }}</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/saved_news">Saved News</a>
+          </li> <!-- New link for Saved News -->
           <li class="nav-item">
             <a class="nav-link" href="/logout">Logout</a>
           </li>
@@ -32,4 +35,3 @@
     </div>
   </div>
 </nav>
-
