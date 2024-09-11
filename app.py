@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 from sqlalchemy.exc import IntegrityError
 import os 
 import psycopg2
@@ -181,6 +181,38 @@ def view_saved_news():
     saved_news = Favorite.query.filter_by(user_id=g.user.id).all()
 
     return render_template('saved_news.html', saved_news=saved_news)
+
+@app.route('/save_favorite', methods=['POST'])
+def save_favorite():
+    if not g.user:
+        flash("You need to log in to save news.", "warning")
+        return redirect(url_for('login'))
+
+    # Retrieve form data from the request
+    news_title = request.form['news_title']
+    news_link = request.form['news_link']
+    publish_date = request.form['publish_date']
+    description = request.form['description']
+
+    # Check if this news item is already saved for this user
+    existing_favorite = Favorite.query.filter_by(user_id=g.user.id, news_title=news_title).first()
+
+    if existing_favorite:
+        flash("You already saved this news item.", "info")
+    else:
+        # Save the new favorite news item for the current user
+        new_favorite = Favorite(
+            user_id=g.user.id,
+            news_title=news_title,
+            news_link=news_link,
+            publish_date=publish_date,
+            description=description
+        )
+        db.session.add(new_favorite)
+        db.session.commit()
+        flash("News saved successfully!", "success")
+
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
