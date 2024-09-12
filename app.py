@@ -51,6 +51,26 @@ def do_logout():
     if 'username' in session:
         session.pop('username')
 
+def delete_duplicate_news():
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    # Use a CTE (Common Table Expression) to find and delete duplicates based on the 'link' column
+    cur.execute("""
+        DELETE FROM news
+        WHERE id IN (
+            SELECT id FROM (
+                SELECT id, ROW_NUMBER() OVER (PARTITION BY link ORDER BY id) AS row_num
+                FROM news
+            ) t
+            WHERE t.row_num > 1
+        );
+    """)
+    conn.commit()
+    cur.close()
+    conn.close()
+
+
 # Function to load the currently logged-in user before each request
 @app.before_request
 def add_user_to_g():
@@ -144,33 +164,70 @@ def list_users():
 
 @app.route('/')
 def index():
+    delete_duplicate_news()
+
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute("SELECT title, link, publish_date, description FROM news ORDER BY publish_date DESC;")
+    
+    per_page = 7
+    page = request.args.get('page', 1, type=int)
+    offset = (page - 1) * per_page
+    
+    cur.execute("SELECT title, link, publish_date, description FROM news ORDER BY publish_date DESC LIMIT %s OFFSET %s;", (per_page, offset))
     news_items = cur.fetchall()
+
+    cur.execute("SELECT COUNT(*) FROM news;")
+    total_news = cur.fetchone()[0]
     cur.close()
     conn.close()
-    return render_template('index.html', news_items=news_items)
+
+    total_pages = (total_news + per_page - 1) // per_page
+
+    # Calculate which page numbers to show
+    num_visible_pages = 5
+    start_page = max(1, page - 2)
+    end_page = min(start_page + num_visible_pages - 1, total_pages)
+    if end_page - start_page + 1 < num_visible_pages:
+        start_page = max(1, end_page - num_visible_pages + 1)
+
+    return render_template('index.html', news_items=news_items, page=page, total_pages=total_pages, start_page=start_page, end_page=end_page)
+
+
+
 
 @app.route('/search', methods=['GET'])
 def search():
-    query = request.args.get('q')
+    query = request.args.get('q', '')
+    page = request.args.get('page', 1, type=int)
+    per_page = 7
+    offset = (page - 1) * per_page
+
     conn = get_db_connection()
     cur = conn.cursor()
 
-    if query:
-        cur.execute(
-            "SELECT title, link, publish_date, description FROM news WHERE title ILIKE %s OR publish_date::text ILIKE %s ORDER BY publish_date DESC;",
-            (f'%{query}%', f'%{query}%')
-        )
-    else:
-        cur.execute("SELECT title, link, publish_date, description FROM news ORDER BY publish_date DESC;")
-
+    # Modify your search query as needed for title or date search
+    cur.execute("SELECT title, link, publish_date, description FROM news WHERE title ILIKE %s OR publish_date::text ILIKE %s LIMIT %s OFFSET %s;", 
+                (f"%{query}%", f"%{query}%", per_page, offset))
     search_results = cur.fetchall()
+
+    # Get the total count of results for pagination
+    cur.execute("SELECT COUNT(*) FROM news WHERE title ILIKE %s OR publish_date::text ILIKE %s;", 
+                (f"%{query}%", f"%{query}%",))
+    total_search_results = cur.fetchone()[0]
     cur.close()
     conn.close()
 
-    return render_template('index.html', news_items=search_results)
+    total_pages = (total_search_results + per_page - 1) // per_page
+
+    # Calculate which page numbers to show
+    num_visible_pages = 5
+    start_page = max(1, page - 2)
+    end_page = min(start_page + num_visible_pages - 1, total_pages)
+    if end_page - start_page + 1 < num_visible_pages:
+        start_page = max(1, end_page - num_visible_pages + 1)
+
+    return render_template('index.html', news_items=search_results, page=page, total_pages=total_pages, start_page=start_page, end_page=end_page)
+
 
 @app.route('/saved_news')
 def view_saved_news():
