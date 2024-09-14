@@ -12,7 +12,7 @@ from models import Favorite
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    os.environ.get('DATABASE_URL', 'postgresql:///news'))
+    os.environ.get('DATABASE_URL', 'postgresql:///news_b5qj'))
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
@@ -27,10 +27,10 @@ CURR_USER_KEY = "curr_user"
 # Database connection details
 def get_db_connection():
     conn = psycopg2.connect(
-        dbname="news",
-        user="carlinha",
-        password="240291",
-        host="localhost",
+        dbname="news_b5qj",
+        user="news_b5qj_user",
+        password="gdUyyzbLbc5fJtBhXFMDL1LqMiCBiS6t",
+        host="dpg-criuujqj1k6c73fiep8g-a",
         port="5432"
     )
     return conn

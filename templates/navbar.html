@@ -1,34 +1,34 @@
 <!-- navbar.html -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #004d00;">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">
-      <span>Software News</span>
+    <a class="navbar-brand font-weight-bold" href="/">
+      Software News
     </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- Toggle button for mobile view -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
+    <!-- Links and user status -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
         {% if not g.user %}
-          <!-- If user is not logged in, show Sign up and Login -->
           <li class="nav-item">
-            <a class="nav-link" href="/signup">Sign up</a>
+            <a class="nav-link font-weight-bold" href="/signup">Sign Up</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login">Log in</a>
+            <a class="nav-link font-weight-bold" href="/login">Log In</a>
           </li>
         {% else %}
-          <!-- If user is logged in, show name, Saved News, and Logout -->
           <li class="nav-item">
-            <a class="nav-link" href="#">Hi, {{ g.user.username }}</a>
+            <a class="nav-link font-weight-bold" href="#">Hi, {{ g.user.username }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/saved_news">Saved News</a>
-          </li> <!-- New link for Saved News -->
+            <a class="nav-link font-weight-bold" href="/saved_news">Saved News</a>
+          </li>
           <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
+            <a class="nav-link font-weight-bold" href="/logout">Logout</a>
           </li>
         {% endif %}
       </ul>

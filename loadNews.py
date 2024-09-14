@@ -11,10 +11,10 @@ df = pd.read_csv(csv_file, encoding='UTF-8')
 
 # Database connection details
 conn = psycopg2.connect(
-    dbname="news",
-    user="carlinha",
-    password="240291",
-    host="localhost",
+    dbname="news_b5qj",
+    user="news_b5qj_user",
+    password="gdUyyzbLbc5fJtBhXFMDL1LqMiCBiS6t",
+    host="dpg-criuujqj1k6c73fiep8g-a",
     port="5432"
 )
 cur = conn.cursor()
