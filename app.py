@@ -7,7 +7,7 @@ from forms import LoginForm
 from models import  User
 from flask import g
 from models import Favorite
-
+from models import news
 
 app = Flask(__name__)
 
