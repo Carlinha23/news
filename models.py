@@ -49,6 +49,16 @@ class Favorite(db.Model):
 
     user = db.relationship('User', backref=db.backref('favorites', lazy=True))
 
+class News(db.Model):
+    __tablename__ = 'news'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    link = db.Column(db.String(500), nullable=False)
+    publish_date = db.Column(db.DateTime, nullable=False)
+    description = db.Column(db.String, nullable=True)
+
+
 def connect_db(app):
     """Connect this database to provided Flask app."""
     db.app = app
