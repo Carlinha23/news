@@ -14,7 +14,7 @@ conn = psycopg2.connect(
     dbname="news_b5qj",
     user="news_b5qj_user",
     password="gdUyyzbLbc5fJtBhXFMDL1LqMiCBiS6t",
-    host="dpg-criuujqj1k6c73fiep8g-a",
+    host="dpg-criuujqj1k6c73fiep8g-a.oregon-postgres.render.com",
     port="5432"
 )
 cur = conn.cursor()

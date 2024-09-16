@@ -27,11 +27,11 @@ CURR_USER_KEY = "curr_user"
 # Database connection details
 def get_db_connection():
     conn = psycopg2.connect(
-        dbname="news_b5qj",
-        user="news_b5qj_user",
-        password="gdUyyzbLbc5fJtBhXFMDL1LqMiCBiS6t",
-        host="dpg-criuujqj1k6c73fiep8g-a",
-        port="5432"
+    dbname="news_b5qj",
+    user="news_b5qj_user",
+    password="gdUyyzbLbc5fJtBhXFMDL1LqMiCBiS6t",
+    host="dpg-criuujqj1k6c73fiep8g-a.oregon-postgres.render.com",
+    port="5432"
     )
     return conn
 
