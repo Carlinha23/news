@@ -7,7 +7,7 @@ Software News is a news agreggator website designed for software enthusiasts to 
 ## Tech Stack
 
 - Python
-- -Flask
+- Flask
 - PostgreSQL
 
 ## Deployment
