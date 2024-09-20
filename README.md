@@ -2,7 +2,7 @@
 
 ## Overview
 
-Software News is a news agreggator website designed for software enthusiasts to be uptaded about the news tendencies and technologies. 
+Software News is a news agreggator website designed for software enthusiasts to stay uptaded on the latest trends and technologies. 
 
 ## Tech Stack
 
