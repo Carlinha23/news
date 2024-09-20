@@ -1,4 +1,4 @@
-#**Software News**
+# **Software News**
 
 ## Overview
 
@@ -13,7 +13,7 @@ Software News is a news agreggator website designed for software enthusiasts to 
 ## Deployment
 
 The application is deployed with Render.
-[https://news-8uso.onrender.com/)
+https://news-8uso.onrender.com/
 
 
 
